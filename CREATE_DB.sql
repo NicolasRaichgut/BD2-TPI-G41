@@ -5,12 +5,12 @@ USE EmpresaTransporte;
 GO
 
 CREATE TABLE [Cliente] (
-	[Dni] VARCHAR(10) NOT NULL,
+	[Dni] VARCHAR(10) NOT NULL CHECK(LEN(Dni) BETWEEN 7 AND 8 AND Dni NOT LIKE '%[^0-9]%'),
 	[Nombre] VARCHAR(40) NOT NULL,
 	[Apellido] VARCHAR(40) NOT NULL,
-	[NumeroTelefono] VARCHAR(20) NOT NULL,
+	[NumeroTelefono] VARCHAR(20) NOT NULL CHECK(LEN(NumeroTelefono) BETWEEN 8 AND 16 AND NumeroTelefono NOT LIKE '%[^0-9]%'),
 	[Direccion] VARCHAR(100),
-	[FechaNacimiento] DATE NOT NULL,
+	[FechaNacimiento] DATE NOT NULL CHECK(FechaNacimiento <= Getdate()),
 
 	PRIMARY KEY([Dni])
 );
@@ -30,7 +30,8 @@ CREATE TABLE [Turno] (
 	[HoraInicio] TIME NOT NULL,
 	[HoraFin] TIME NOT NULL,
 
-	PRIMARY KEY([Id])
+	PRIMARY KEY([Id]),
+	CHECK(HoraInicio <> HoraFin)
 );
 GO
 
@@ -53,19 +54,19 @@ GO
 
 CREATE TABLE [EstadoViaje] (
 	[Id] INTEGER NOT NULL IDENTITY(1,1),
-	[Descripcion] VARCHAR(40) NOT NULL UNIQUE,
+	[Descripcion] VARCHAR(40) NOT NULL UNIQUE CHECK(Descripcion IN('Solicitado', 'Aceptado', 'En curso', 'Finalizado', 'Cancelado')),
 
 	PRIMARY KEY([Id])
 );
 GO
 
 CREATE TABLE [Chofer] (
-	[Dni] VARCHAR(10) NOT NULL,
+	[Dni] VARCHAR(10) NOT NULL CHECK(LEN(Dni) BETWEEN 7 AND 8 AND Dni NOT LIKE '%[^0-9]%'),
 	[Nombre] VARCHAR(40) NOT NULL,
 	[Apellido] VARCHAR(40) NOT NULL,
-	[NumeroTelefono] VARCHAR(20) NOT NULL,
+	[NumeroTelefono] VARCHAR(20) NOT NULL CHECK(LEN(NumeroTelefono) BETWEEN 8 AND 16 AND NumeroTelefono NOT LIKE '%[^0-9]%'),
 	[Direccion] VARCHAR(100),
-	[FechaIncorporacion] DATE NOT NULL,
+	[FechaIncorporacion] DATE NOT NULL CHECK(FechaIncorporacion <= Getdate()),
 	[IdTurno] INTEGER NOT NULL,
 
 	PRIMARY KEY([Dni]),
@@ -108,10 +109,10 @@ CREATE TABLE [Viaje] (
 GO
 
 CREATE TABLE [Remis] (
-	[Patente] VARCHAR(10) NOT NULL,
+	[Patente] VARCHAR(10) NOT NULL CHECK(LEN(Patente) BETWEEN 6 AND 7),
 	[Marca] VARCHAR(40) NOT NULL,
 	[Modelo] VARCHAR(40) NOT NULL,
-	[Anio] SMALLINT NOT NULL,
+	[Anio] SMALLINT NOT NULL CHECK(Anio BETWEEN 1970 AND Year(Getdate())),
 	[DniChofer] VARCHAR(10) NOT NULL UNIQUE,
 	[IdTipoVehiculo] INTEGER NOT NULL,
 
