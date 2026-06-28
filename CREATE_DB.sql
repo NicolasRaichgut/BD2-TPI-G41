@@ -122,3 +122,14 @@ CREATE TABLE [Remis] (
 );
 GO
 
+CREATE TABLE AuditoriaViaje
+(
+    [Id] INTEGER NOT NULL IDENTITY(1,1),
+    [IdViaje] INTEGER NOT NULL,
+    [Operacion] VARCHAR(10) NOT NULL,
+    [Fecha] DATETIME NOT NULL DEFAULT GETDATE(),
+
+	PRIMARY KEY ([Id])
+);
+GO
+
