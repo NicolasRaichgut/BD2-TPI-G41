@@ -1,12 +1,14 @@
 USE EmpresaTransporte
 GO
 
+SET QUOTED_IDENTIFIER ON;
+GO
+
 -- sp_reporteViajes: recibe dos fechas y devuelve los viajes que se hicieron entre ambas.
 
-CREATE PROCEDURE sp_reporteViajes(
+CREATE PROCEDURE sp_reporteViajes
 	@FechaInicio DATE,
 	@FechaFin DATE
-)
 AS
 BEGIN
 
@@ -35,14 +37,13 @@ GO
 
 -- sp_agregarViaje
 
-CREATE PROCEDURE sp_agregarViaje(
+CREATE PROCEDURE sp_agregarViaje
 	@DniCliente VARCHAR(10),
 	@DniChofer VARCHAR(10),
 	@Fecha DATETIME,
 	@DireccionOrigen VARCHAR(100),
 	@DireccionDestino VARCHAR(100),
 	@DistanciaKm DECIMAL(5,2)
-)
 AS
 BEGIN
 	INSERT INTO Viaje(DniCliente, DniChofer, Fecha, DireccionOrigen, DireccionDestino, DistanciaKm, IdEstado)
