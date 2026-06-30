@@ -1,4 +1,7 @@
-USE EmpresaTransporte
+USE EmpresaTransporte;
+GO
+
+SET QUOTED_IDENTIFIER ON;
 GO
 
 -- tr_registrarViajeInsertado: guardamos informacion acerca del viaje insertado en la tabla AuditoriaViaje.
@@ -12,7 +15,9 @@ BEGIN
     SELECT Id, 'INSERT'
     FROM inserted;
 END;
+GO
 
+ENABLE TRIGGER tr_registrarViajeInsertado ON Viaje;
 GO
 
 
@@ -27,7 +32,9 @@ BEGIN
     SELECT Id, 'DELETE'
     FROM deleted;
 END;
+GO
 
+ENABLE TRIGGER tr_registrarViajeEliminado ON Viaje;
 GO
 
 
@@ -55,3 +62,4 @@ BEGIN
 		ROLLBACK TRANSACTION;
 	END
 END;
+GO
