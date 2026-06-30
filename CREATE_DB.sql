@@ -90,7 +90,7 @@ CREATE TABLE [Viaje] (
 	[DniCliente] VARCHAR(10) NOT NULL,
 	[DniChofer] VARCHAR(10) NOT NULL,
 	[Fecha] DATETIME NOT NULL,
-	[IdPago] INTEGER UNIQUE,
+	[IdPago] INTEGER,
 	[DireccionOrigen] VARCHAR(100) NOT NULL,
 	[DireccionDestino] VARCHAR(100) NOT NULL,
 	[IdCalificacion] INTEGER,
@@ -133,3 +133,7 @@ CREATE TABLE AuditoriaViaje
 );
 GO
 
+CREATE UNIQUE INDEX IX_Viaje_IdPago
+ON Viaje(IdPago)
+WHERE IdPago IS NOT NULL;
+GO
